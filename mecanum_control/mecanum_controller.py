@@ -57,49 +57,49 @@ class MecanumController:
             # 前进: 所有轮子正转
             speeds = {
                 'lf': speed,
-                'rf': speed,
+                'rf': -speed,
                 'lb': speed,
-                'rb': speed
+                'rb': -speed
             }
         elif motion_type == 'backward':
             # 后退: 所有轮子反转
             speeds = {
                 'lf': -speed,
-                'rf': -speed,
+                'rf': speed,
                 'lb': -speed,
-                'rb': -speed
+                'rb': speed
             }
         elif motion_type == 'left':
             # 左移: 对角轮子方向相反
             speeds = {
                 'lf': -speed,
-                'rf': speed,
+                'rf': -speed,
                 'lb': speed,
-                'rb': -speed
+                'rb': speed
             }
         elif motion_type == 'right':
             # 右移: 对角轮子方向相反
             speeds = {
                 'lf': speed,
-                'rf': -speed,
+                'rf': speed,
                 'lb': -speed,
-                'rb': speed
+                'rb': -speed
             }
         elif motion_type == 'turn_ccw':
             # 逆时针旋转: 左侧轮子反转，右侧轮子正转
             speeds = {
                 'lf': -speed,
-                'rf': speed,
+                'rf': -speed,
                 'lb': -speed,
-                'rb': speed
+                'rb': -speed
             }
         elif motion_type == 'turn_cw':
             # 顺时针旋转: 左侧轮子正转，右侧轮子反转
             speeds = {
                 'lf': speed,
-                'rf': -speed,
+                'rf': speed,
                 'lb': speed,
-                'rb': -speed
+                'rb': speed
             }
         
         return speeds
