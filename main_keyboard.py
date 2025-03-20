@@ -1,6 +1,6 @@
-from mecanum_control.zlg_can_controller import ZLGCANController
-from mecanum_control.mecanum_controller import MecanumController
-from mecanum_control.keyboard_control import KeyboardControlInterface
+from zlg_can_controller import ZLGCANController
+from mecanum_controller import MecanumController
+from keyboard_control import KeyboardControlInterface
 
 def main():
     """主函数"""
