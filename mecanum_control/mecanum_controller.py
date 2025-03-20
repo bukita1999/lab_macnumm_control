@@ -180,6 +180,23 @@ class MecanumController:
                 motor.set_speed(0)
             return False
     
+    # 新增方法
+    def set_wheel_speeds_directly(self, wheel_speeds):
+        """直接设置各轮速度
+        wheel_speeds: 包含各轮速度的字典 {'lf': speed, 'rf': speed, 'lb': speed, 'rb': speed}
+        """
+        if not self.initialized:
+            print("控制器未初始化")
+            return False
+            
+        try:
+            for wheel, speed in wheel_speeds.items():
+                self.motors[wheel].set_speed(speed)
+            return True
+        except Exception as e:
+            print(f"设置轮速度异常: {e}")
+            return False
+
     def stop_all(self):
         """停止所有电机"""
         for name, motor in self.motors.items():
