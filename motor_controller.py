@@ -52,7 +52,7 @@ class MotorController:
         # 构造速度命令
         data = [0x23, 0xFF, 0x60, 0x00] + cmd_bytes
         
-        print(f"设置节点 {self.node_id} 的速度为 {rpm} RPM (命令值: {cmd_value})...")
+        # print(f"设置节点 {self.node_id} 的速度为 {rpm} RPM (命令值: {cmd_value})...")
         return self.can.send_message(0x600 + self.node_id, data)
     
     def initialize(self):

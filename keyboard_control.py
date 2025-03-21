@@ -23,9 +23,9 @@ class KeyboardControlInterface(CommandInterface):
         # 速度控制参数
         self.target_speeds = {key: 0 for key in self.key_mapping}
         self.current_speeds = {key: 0 for key in self.key_mapping}
-        self.max_speed = 20.0  # 最大RPM
-        self.acceleration = 5.0  # 每秒增加的RPM
-        self.deceleration = 10.0  # 每秒减少的RPM
+        self.max_speed = 100.0  # 最大RPM
+        self.acceleration = 20.0  # 每秒增加的RPM
+        self.deceleration = 50.0  # 每秒减少的RPM
         
         # 显示控制
         self.display_speeds = True
