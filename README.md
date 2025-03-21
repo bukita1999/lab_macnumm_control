@@ -47,9 +47,9 @@
 
 ### 入口程序
 
+- **run_keyboard_control_command.sh** - 在Ubuntu上运行按键控制代码
 - **main.py** - 基于命令行界面的主程序
 - **main_keyboard.py** - 基于键盘控制的主程序
-- **main_linux.py** - Linux环境下的主程序版本
 
 ### 测试工具
 
@@ -73,12 +73,14 @@
    - 电机驱动器已连接到CAN总线
    - 电源供应正常
 
-2. 选择合适的程序入口：
-   - 命令行控制: `python main.py`
-   - 键盘实时控制: `python main_keyboard.py`
-   - Linux环境: `python main_linux.py`
+2. 序入口：
+   - Ubuntu下运行键盘操作模式：
+      ```
+      bash run_keyboard_control_command.sh
+      ```
 
-### 命令行控制模式
+
+### 输出指令格式
 
 命令格式: `<运动模式> <加速时间> <匀速时间> <减速时间> <目标RPM>`
 
@@ -96,7 +98,7 @@
 - `h` - 显示帮助
 - `x` - 退出程序
 
-### 键盘实时控制模式
+### 用户键盘实时控制
 
 控制键:
 - `W` - 前进 (按住加速)
@@ -124,66 +126,3 @@
 - CAN通道: 0
 - 轮子节点ID: 左前=1, 右前=2, 左后=12, 右后=4
 
-## 开发指南
-
-### 添加新的运动模式
-
-1. 在`mecanum_controller.py`中的`MOTION_MODES`字典添加新模式
-2. 在`get_wheel_speeds`方法中添加对应的速度计算逻辑
-3. 更新命令接口中的帮助信息
-
-### 自定义硬件配置
-
-如需更改硬件配置:
-1. 修改`main.py`中的`ZLGCANController`和`MecanumController`初始化参数
-2. 根据实际硬件调整电机ID和波特率
-3. 对于Linux版本，修改`main_linux.py`中的库路径为`libcontrolcan.so`
-
-### 速度计算
-
-电机速度从RPM转换为内部命令值的公式:
-```
-counts_per_rev = 10000  # 2500线 * 4倍频
-counts_per_sec = rpm * counts_per_rev / 60
-cmd_value = counts_per_sec / 0.1
-```
-
-## 故障排除
-
-### 连接问题
-
-- 确保`ControlCAN.dll`(Windows)或`libcontrolcan.so`(Linux)在当前目录下
-- 检查USB连接和驱动程序安装状态
-- 验证设备在设备管理器中正常显示
-
-### 通信问题
-
-- 确认波特率设置与总线一致(默认500Kbps)
-- 检查CAN总线终端电阻
-- 使用测试工具(`can_device_scanner.py`)扫描和确认设备在线
-
-### 电机不响应
-
-- 检查电源连接
-- 确认节点ID设置正确
-- 使用`test_simple_can.py`测试单个电机控制
-
-## 项目扩展
-
-本项目可进一步扩展:
-- 集成传感器数据用于闭环控制
-- 添加自动障碍物避免功能
-- 开发基于ROS的接口
-- 实现路径规划和自主导航
-- 开发Web或移动端远程控制界面
-
-## 注意事项
-
-- 首次使用前，建议先运行测试工具确认设备连接正常
-- 电机初始控制速度应设置为较低值，确保安全
-- 确保运动区域内无障碍物和人员
-- 使用前检查所有电气连接，确保系统安全
-
----
-
-*开发者联系方式: 请发送电子邮件至...*
