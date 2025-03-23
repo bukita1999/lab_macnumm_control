@@ -1,5 +1,5 @@
-from python_can_controller import PythonCANController
-from mecanum_controller import MecanumController
+from src.mecanum_control.python_can_controller import PythonCANController
+from src.mecanum_control.mecanum_controller import MecanumController
 from keyboard_control import KeyboardControlInterface
 
 def main():

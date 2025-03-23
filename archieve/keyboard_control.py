@@ -2,7 +2,7 @@ import keyboard
 import threading
 import time
 import os
-from command_interface import CommandInterface
+from archieve.command_interface import CommandInterface
 
 class KeyboardControlInterface(CommandInterface):
     """基于键盘的麦克纳姆轮实时控制接口"""

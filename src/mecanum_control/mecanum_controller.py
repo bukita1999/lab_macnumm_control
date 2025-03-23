@@ -1,6 +1,6 @@
 import time
-from motor_controller import MotorController
-from trajectory_planner import TrajectoryPlanner
+from src.mecanum_control.motor_controller import MotorController
+from src.mecanum_control.trajectory_planner import TrajectoryPlanner
 
 class MecanumController:
     """麦克纳姆轮控制类"""
