@@ -1,0 +1,4 @@
+<launch>
+  <!-- 启动命令行接口节点 -->
+  <node name="command_interface" pkg="mecanum_control" type="command_interface_node.py" output="screen"/>
+</launch>

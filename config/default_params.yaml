@@ -1,0 +1,18 @@
+# 麦克纳姆轮控制器默认参数
+mecanum_controller:
+  # CAN通信配置
+  can_interface: "socketcan"
+  can_channel: "can0"
+  can_bitrate: 500000
+  
+  # 电机配置
+  wheel_ids: [1, 2, 12, 4]  # 左前, 右前, 左后, 右后
+  
+  # 运动控制默认参数
+  default_accel_time: 2.0
+  default_cruise_time: 5.0
+  default_decel_time: 2.0
+  default_target_rpm: 10.0
+  
+  # 状态发布频率
+  status_publish_rate: 10.0

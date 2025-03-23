@@ -1,0 +1,9 @@
+<launch>
+  <!-- 加载参数文件 -->
+  <rosparam command="load" file="$(find mecanum_control)/config/default_params.yaml" />
+  
+  <!-- 启动控制器节点 -->
+  <node name="mecanum_controller" pkg="mecanum_control" type="mecanum_controller_node.py" output="screen">
+    <param name="wheel_ids" value="[1, 2, 12, 4]" />
+  </node>
+</launch>

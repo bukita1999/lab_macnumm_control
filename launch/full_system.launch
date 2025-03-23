@@ -1,0 +1,10 @@
+<launch>
+  <!-- 启动麦克纳姆轮控制器 -->
+  <include file="$(find mecanum_control)/launch/mecanum_controller.launch" />
+
+  <!-- 启动键盘控制 -->
+  <include file="$(find mecanum_control)/launch/keyboard_control.launch" />
+
+  <!-- 启动命令行接口 -->
+  <include file="$(find mecanum_control)/launch/command_interface.launch" />
+</launch>

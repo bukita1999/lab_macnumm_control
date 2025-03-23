@@ -1,10 +1,11 @@
 import time
+import rospy
 from src.mecanum_control.motor_controller import MotorController
 from src.mecanum_control.trajectory_planner import TrajectoryPlanner
 
 class MecanumController:
     """麦克纳姆轮控制类"""
-    
+
     # 运动模式映射
     MOTION_MODES = {
         'w': 'forward',    # 前进
@@ -107,74 +108,74 @@ class MecanumController:
     def execute_motion(self, motion_key, accel_time, cruise_time, decel_time, target_rpm):
         """执行运动命令"""
         if not self.initialized:
-            print("控制器未初始化")
+            rospy.logwarn("控制器未初始化")
             return False
-            
+
         if motion_key not in self.MOTION_MODES:
-            print(f"未知运动模式: {motion_key}")
+            rospy.logwarn(f"未知运动模式: {motion_key}")
             return False
-            
+
         motion_type = self.MOTION_MODES[motion_key]
-        print(f"执行 {motion_type} 运动, 目标RPM: {target_rpm}")
-        
+        rospy.loginfo(f"执行 {motion_type} 运动, 目标RPM: {target_rpm}")
+
         try:
             # 生成梯形速度曲线
             time_points, speed_profile = self.trajectory_planner.generate_trapezoidal_profile(
                 target_rpm, accel_time, cruise_time, decel_time
             )
-            
+
             # 获取各轮速度方向
             wheel_directions = self.get_wheel_speeds(motion_type, 1.0)
-            
+
             # 创建适配各轮的速度曲线
             wheel_profiles = {}
             for wheel, direction in wheel_directions.items():
                 wheel_profiles[wheel] = [s * direction for s in speed_profile]
-            
+
             # 执行轨迹
-            print("开始执行轨迹...")
+            rospy.loginfo("开始执行轨迹...")
             start_time = time.time()
             last_index = 0
-            
+
             while last_index < len(time_points):
                 current_time = time.time() - start_time
-                
+
                 # 找到当前时间对应的速度点
                 while last_index < len(time_points) and time_points[last_index] <= current_time:
                     last_index += 1
-                
+
                 if last_index > 0:
                     progress = min(100, int(current_time / time_points[-1] * 100))
                     remaining = max(0, time_points[-1] - current_time)
-                    print(f"执行中: {progress}%, 剩余 {remaining:.1f} 秒       ", end="\r")
-                    
+                    rospy.loginfo(f"执行中: {progress}%, 剩余 {remaining:.1f} 秒")
+
                     # 设置各轮速度
                     for wheel, profile in wheel_profiles.items():
                         current_speed = profile[last_index - 1]
                         self.motors[wheel].set_speed(current_speed)
-                
+
                 # 休眠短暂时间，减少CPU占用
                 time.sleep(0.05)
-                
+
                 # 检查是否完成
                 if current_time >= time_points[-1]:
                     break
-            
+
             # 停止所有电机
             for motor in self.motors.values():
                 motor.set_speed(0)
-            
-            print("\n运动执行完成!")
+
+            rospy.loginfo("\n运动执行完成!")
             return True
-            
+
         except KeyboardInterrupt:
-            print("\n运动被用户中断")
+            rospy.logwarn("\n运动被用户中断")
             # 停止所有电机
             for motor in self.motors.values():
                 motor.set_speed(0)
             return False
         except Exception as e:
-            print(f"\n运动执行异常: {e}")
+            rospy.logerr(f"\n运动执行异常: {e}")
             # 停止所有电机
             for motor in self.motors.values():
                 motor.set_speed(0)
