@@ -1,10 +1,10 @@
 from distutils.core import setup
 from catkin_pkg.python_setup import generate_distutils_setup
 
-d = generate_distutils_setup(
+setup_args = generate_distutils_setup(
     packages=['mecanum_control'],
-    package_dir={'mecanum_control': 'src'},
-    py_modules=['mecanum_controller', 'python_can_controller', 'motor_controller', 'trajectory_planner']
+    package_dir={'': 'src'},
+    install_requires=['python-can']
 )
 
-setup(**d)
+setup(**setup_args)

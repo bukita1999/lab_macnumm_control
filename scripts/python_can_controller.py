@@ -5,7 +5,7 @@ import rospy
 class PythonCANController:
     """Python-CAN based controller to replace ZLGCANController"""
     
-    def __init__(self, interface='socketcan', channel='can0', bitrate=500000):
+    def __init__(self, interface='canalystii', channel='0', bitrate=500000):
         """Initialize Python-CAN controller
 
         Args:

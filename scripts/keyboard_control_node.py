@@ -52,10 +52,10 @@ class KeyboardControlNode:
             if motion_type:
                 command = MecanumCommand()
                 command.motion_type = motion_type
-                command.accel_time = 0.5
-                command.cruise_time = 1.0
-                command.decel_time = 0.5
-                command.target_rpm = 5.0
+                command.accel_time = 1
+                command.cruise_time = 0
+                command.decel_time = 1
+                command.target_rpm = 100.0
                 self.cmd_pub.publish(command)
                 print(f"发送命令: {motion_type}")
             elif ord(key) == 3:  # Ctrl+C

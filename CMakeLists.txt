@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(mecanum_control)
 
 ## 查找所需包
+list(APPEND CMAKE_PREFIX_PATH "/home/robotlab/anaconda3/lib/python3.11/site-packages")
 find_package(catkin REQUIRED COMPONENTS
   rospy
   message_generation
@@ -33,19 +34,24 @@ include_directories(
 
 ## 安装Python执行文件
 catkin_install_python(PROGRAMS
-  src/mecanum_controller_node.py
-  src/command_interface_node.py
-  src/keyboard_control_node.py
+  scripts/mecanum_controller_node.py
+  scripts/command_interface_node.py
+  scripts/keyboard_control_node.py
+  scripts/mecanum_controller.py
+  scripts/motor_controller.py
+  scripts/python_can_controller.py
+  scripts/setup_socketcan.py
+  scripts/trajectory_planner.py
   scripts/can_device_scanner.py
   scripts/setup_socketcan.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
 ## 安装Python模块
-install(DIRECTORY src
-  DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
-  FILES_MATCHING PATTERN "*.py"
-)
+##install(DIRECTORY scripts
+##  DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
+##  FILES_MATCHING PATTERN "*.py"
+##)
 
 ## 安装消息文件
 install(
