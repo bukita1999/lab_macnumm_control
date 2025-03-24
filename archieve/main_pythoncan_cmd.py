@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # main_pythoncan_cmd.py - Linux环境下基于Python-CAN的命令行控制程序
 
-from src.mecanum_control.python_can_controller import PythonCANController
-from src.mecanum_control.mecanum_controller import MecanumController
+from python_can_controller import PythonCANController
+from mecanum_controller import MecanumController
 from archieve.command_interface import CommandInterface
 
 def main():

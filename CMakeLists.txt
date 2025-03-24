@@ -42,7 +42,7 @@ catkin_install_python(PROGRAMS
 )
 
 ## 安装Python模块
-install(DIRECTORY src/mecanum_control
+install(DIRECTORY src
   DESTINATION ${CATKIN_PACKAGE_PYTHON_DESTINATION}
   FILES_MATCHING PATTERN "*.py"
 )

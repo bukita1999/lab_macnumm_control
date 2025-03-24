@@ -2,8 +2,8 @@
 
 import rospy
 from mecanum_control.msg import MecanumCommand, MecanumStatus
-from mecanum_control.python_can_controller import PythonCANController
-from mecanum_control.mecanum_controller import MecanumController
+from python_can_controller import PythonCANController
+from mecanum_controller import MecanumController
 
 class MecanumControllerNode:
     def __init__(self):
