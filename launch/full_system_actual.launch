@@ -1,0 +1,16 @@
+<launch>
+  <!-- 
+    启动完整的系统，包括使用 'actual' 驱动模式的 Mecanum 控制器
+    和命令接口节点。
+  -->
+
+  <!-- 启动使用 'actual' 驱动的 Mecanum 控制器节点 -->
+  <include file="$(find mecanum_control)/launch/mecanum_controller_actual.launch" />
+
+  <!-- 启动命令接口节点 -->
+  <include file="$(find mecanum_control)/launch/command_interface.launch" />
+
+  <!-- 如果需要，可以在这里添加其他节点，例如键盘控制节点 -->
+  <!-- <include file="$(find mecanum_control)/launch/keyboard_control.launch" /> -->
+
+</launch>

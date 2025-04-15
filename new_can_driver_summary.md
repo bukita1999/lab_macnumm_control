@@ -46,3 +46,29 @@
 **总结:**
 
 本次修改的关键在于创建了一个并行的驱动程序，通过 `driver_type` 参数进行切换，并使用转换层来适配新旧 CAN 协议的差异，从而实现了对新机器人的控制，同时保持了原有 ROS 接口的兼容性。
+
+
+**启动说明:**
+
+为了方便使用新的 'actual' 驱动模式，已创建了专门的 launch 文件：
+
+1.  **启动单独的 'actual' 驱动控制器节点:**
+
+    ```bash
+    roslaunch mecanum_control mecanum_controller_actual.launch
+    ```
+    这个 launch 文件 (`launch/mecanum_controller_actual.launch`) 会加载默认参数并启动 `mecanum_controller_node.py`，同时将 `driver_type` 设置为 `actual`。
+
+2.  **启动包含 'actual' 驱动的完整系统 (控制器 + 命令接口):**
+
+    ```bash
+    roslaunch mecanum_control full_system_actual.launch
+    ```
+    这个 launch 文件 (`launch/full_system_actual.launch`) 会包含 `mecanum_controller_actual.launch` 和 `command_interface.launch`，启动控制器和命令接口节点。
+
+**重要:**
+
+*   请确保 `config/default_params.yaml` 文件中包含了 'actual' 驱动模式所需的运动学参数 (`kinematics/wheel_radius`, `kinematics/wheel_separation_width`, `kinematics/wheel_separation_length`) 以及正确的 CAN 配置 (`can_interface`, `can_channel`, `can_bitrate`)。
+*   如果需要覆盖默认参数，可以直接修改 `mecanum_controller_actual.launch` 文件，或在启动时通过命令行参数传递，例如：
+    ```bash
+    roslaunch mecanum_control mecanum_controller_actual.launch can_channel:=can1 kinematics/wheel_radius:=0.06

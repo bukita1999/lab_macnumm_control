@@ -1,0 +1,31 @@
+<launch>
+  <!-- 
+    启动 Mecanum 控制器节点，并明确指定使用 'actual' 驱动模式。
+    确保 config/default_params.yaml 文件中包含 'actual' 驱动所需的运动学参数
+    (kinematics/wheel_radius, kinematics/wheel_separation_width, kinematics/wheel_separation_length)，
+    或者在此文件中直接设置这些参数。
+  -->
+
+  <!-- 加载通用参数文件 -->
+  <rosparam command="load" file="$(find mecanum_control)/config/default_params.yaml" />
+  
+  <!-- 启动控制器节点 -->
+  <node name="mecanum_controller" pkg="mecanum_control" type="mecanum_controller_node.py" output="screen">
+    <!-- 设置 driver_type 为 actual -->
+    <param name="driver_type" value="actual" />
+    
+    <!-- 'actual' 驱动模式通常不需要 wheel_ids 参数，可以注释掉或删除 -->
+    <!-- <param name="wheel_ids" value="[1, 2, 12, 4]" /> -->
+    
+    <!-- 如果运动学参数不在 default_params.yaml 中，可以在这里覆盖或设置 -->
+    <!-- 
+    <param name="kinematics/wheel_radius" value="0.05" />
+    <param name="kinematics/wheel_separation_width" value="0.3" />
+    <param name="kinematics/wheel_separation_length" value="0.4" />
+    <param name="can_interface" value="socketcan" />
+    <param name="can_channel" value="can0" />
+    <param name="can_bitrate" value="500000" />
+    <param name="publish_rate" value="10.0" />
+    -->
+  </node>
+</launch>
