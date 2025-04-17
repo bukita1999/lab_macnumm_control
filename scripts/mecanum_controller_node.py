@@ -31,10 +31,11 @@ class MecanumControllerNode:
 
         # --- 初始化 CAN 控制器 ---
         # TODO: 从参数读取 CAN 配置 (interface, channel, bitrate)
-        can_interface = rospy.get_param('~can_interface', 'socketcan')
-        can_channel = rospy.get_param('~can_channel', 'can0')
-        can_bitrate = rospy.get_param('~can_bitrate', 500000)
-        self.can_controller = PythonCANController(interface=can_interface, channel=can_channel, bitrate=can_bitrate)
+        can_interface = rospy.get_param('~can_interface', 'canalystii')
+        can_channel = rospy.get_param('~can_channel', '0')
+        # self.can_controller = PythonCANController(interface=can_interface, channel=can_channel, bitrate=can_bitrate)
+        self.can_controller = PythonCANController(interface=can_interface, channel=can_channel, bitrate=250000)
+
         if not self.can_controller.connected:
             rospy.logerr(f"CAN 设备 {can_interface}:{can_channel} 连接失败，节点无法启动")
             self.controller = None # 标记未成功初始化
@@ -135,8 +136,8 @@ class MecanumControllerNode:
             # 1. 将 motion_type 和 target_rpm 转换为 Vx, Vy, Vw
             target_vx, target_vy, target_vw = 0.0, 0.0, 0.0
             try:
-                # 将 RPM 转换为轮子线速度 m/s
-                target_wheel_linear_speed_mps = msg.target_rpm * (2 * math.pi / 60.0) * self.wheel_radius
+                # 不對RPM進行轉換
+                target_wheel_linear_speed_mps = msg.target_rpm 
 
                 # 近似计算角速度 rad/s (基于轮子线速度和机器人几何中心到轮子的平均距离)
                 # 这个转换可能需要根据实际机器人标定调整
@@ -167,6 +168,7 @@ class MecanumControllerNode:
 
                 # TODO: 实现梯形加减速逻辑，此处暂时直接发送目标速度
                 rospy.logdebug(f"Actual Driver: Sending command Vx={target_vx:.2f}, Vy={target_vy:.2f}, Vw={target_vw:.2f}")
+                print('*********send************')
                 self.controller.send_motion_command(target_vx, target_vy, target_vw)
 
             except AttributeError as e:
@@ -175,6 +177,7 @@ class MecanumControllerNode:
                  rospy.logerr(f"处理命令时发生未知错误: {e}")
 
         elif self.driver_type == 'string_cmd':
+            
             # --- String Command Driver Logic ---
             rospy.logdebug(f"String Driver: Received command {msg.motion_type} with RPM {msg.target_rpm}")
 

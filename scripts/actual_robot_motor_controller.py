@@ -77,6 +77,8 @@ class ActualRobotMotorController:
         timestamp = time.time()
         can_id = msg.arbitration_id
         data = msg.data
+        
+        print("******* data: ",data)
 
         with self.status_lock:
             self.last_status['last_update_time'] = timestamp
@@ -157,6 +159,8 @@ class ActualRobotMotorController:
             # 使用 '>' 表示大端序打包 S16 (signed short)
             data = struct.pack('>hhhh', vx_cmd, vy_cmd, vw_cmd, vu_cmd)
 
+            
+            
             # rospy.logdebug(f"Sending motion command: Vx={vx:.2f}({vx_cmd}), Vy={vy:.2f}({vy_cmd}), Vw={vw:.2f}({vw_cmd}), Vu={vu:.2f}({vu_cmd})")
             return self.can.send_message(REMOTE_MOTION_CMD_ID, list(data))
 
