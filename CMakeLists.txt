@@ -44,7 +44,6 @@ catkin_install_python(PROGRAMS
   scripts/trajectory_planner.py
   scripts/can_device_scanner.py
   scripts/setup_socketcan.py
-  scripts/ros_control.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
