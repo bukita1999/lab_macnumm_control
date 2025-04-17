@@ -44,6 +44,13 @@ catkin_install_python(PROGRAMS
   scripts/trajectory_planner.py
   scripts/can_device_scanner.py
   scripts/setup_socketcan.py
+  scripts/string_command_controller.py # <-- Added module
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
+
+## 安装可执行脚本 (如 .sh)
+install(PROGRAMS
+  scripts/launch_actual_driver.sh # <-- Added script
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -65,8 +72,8 @@ install(
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
-## 安装启动文件（如果有）
-# install(
-#   DIRECTORY launch
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
+## 安装启动文件
+install( # <-- Uncommented
+  DIRECTORY launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+) # <-- Uncommented
