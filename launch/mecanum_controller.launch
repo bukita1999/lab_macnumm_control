@@ -1,9 +1,14 @@
 <launch>
+  <!-- 定义启动参数 -->
+  <arg name="driver_type" default="original" doc="Type of driver to use: original, actual, string_cmd"/>
+
   <!-- 加载参数文件 -->
   <rosparam command="load" file="$(find mecanum_control)/config/default_params.yaml" />
-  
+
   <!-- 启动控制器节点 -->
   <node name="mecanum_controller" pkg="mecanum_control" type="mecanum_controller_node.py" output="screen">
-    <param name="wheel_ids" value="[1, 2, 12, 4]" />
+    <!-- 将启动参数传递给节点参数 -->
+    <param name="driver_type" value="$(arg driver_type)" />
+    <!-- wheel_ids 将从 default_params.yaml 加载，无需在此处硬编码 -->
   </node>
 </launch>

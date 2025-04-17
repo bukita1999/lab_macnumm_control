@@ -16,3 +16,6 @@ mecanum_controller:
   
   # 状态发布频率
   status_publish_rate: 10.0
+
+  # --- String Command Controller Specific ---
+  string_cmd_speed_mode: 'A' # Speed mode for string command driver: 'A' (1/10), 'B' (Half), 'C' (Full)
